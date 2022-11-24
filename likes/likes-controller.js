@@ -2,10 +2,10 @@ import {getBooks} from "../books/books-controller.js";
 import users from "../users/users.js";
 
 let likes = [
-  {_id: '123', user: '111', book: '123'},
-  {_id: '234', user: '111', book: '234'},
-  {_id: '345', user: '222', book: '345'},
-  {_id: '456', user: '333', book: '345'},
+  {_id: 'like123', user: '111', book: '123'},
+  {_id: 'like234', user: '111', book: '234'},
+  {_id: 'like345', user: '222', book: '123'},
+  {_id: 'like456', user: '333', book: '234'},
 ]
 
 const LikesController = (app) => {
@@ -27,7 +27,7 @@ const LikesController = (app) => {
     const uid = req.params.uid
     const bid = req.params.bid
     const newLike = {
-      _id: (new Date()).getTime()+'',
+      _id: 'like'+(new Date()).getTime()+'',
       user: uid,
       book: bid
     }
