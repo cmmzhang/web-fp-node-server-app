@@ -1,4 +1,5 @@
-import * as likesDao from "./likes-dao.js";
+import {getBooks} from "../books/books-controller.js";
+import users from "../users/users.js";
 
 let likes = [
   {_id: '123', user: '111', book: '123'},
@@ -22,38 +23,66 @@ const LikesController = (app) => {
     })
     return populatedResults
   }
-  const userLikesBook = async (req, res) => {
+  const userLikesBook = (req, res) => {
     const uid = req.params.uid
     const bid = req.params.bid
-    const newLike = await likesDao.userLikesBook(uid, bid)
+    const newLike = {
+      _id: (new Date()).getTime()+'',
+      user: uid,
+      book: bid
+    }
+    likes.push(newLike)
     res.json(newLike)
   }
-  const userUnlikeBook = async (req, res) => {
+  const userUnlikesBook = (req, res) => {
     const uid = req.params.uid
     const bid = req.params.bid
-    const status = await likesDao.userUnlikesBook(uid, bid)
-    res.send(status)
+    likes = likes.filter((l) => l.user !== uid && l.book !== bid)
+    res.send(200)
   }
-  const findAllLikes = async (req, res) => {
-    const likes = await likesDao.findAllLikes()
-    res.json(likes)
+  const findAllLikes = (req, res) => {
+    const populatedBooks = populate({
+      rawResults: likes,
+      fieldToPopulate: 'book',
+      sourceData: getBooks(),
+      sourceField: '_id'
+    })
+    const populateUsers = populate({
+      rawResults: populatedBooks,
+      fieldToPopulate: 'user',
+      sourceData: users,
+      sourceField: '_id'
+    })
+    res.json(populateUsers)
   }
-  const findBooksLikedByUser = async (req, res) => {
+  const findBooksLikedByUser = (req, res) => {
     const uid = req.params.uid
-    const books = await likesDao.findBooksLikedByUser(uid)
-    res.json(books)
+    const books = likes.filter((like) => like.user === uid)
+    const populatedBooks = populate({
+      rawResults: books,
+      fieldToPopulate: 'book',
+      sourceData: getBooks(),
+      sourceField: '_id'
+    })
+    res.json(populatedBooks)
   }
-  const findUsersWhoLikeBook = async (req, res) => {
+  const findUsersWhoLikedBook = (req, res) => {
     const bid = req.params.bid
-    const users = await likesDao.findUsersThatLikeBook(bid)
-    res.json(users)
+    const usersWhoLikeBook = likes.filter((like) => like.book === bid)
+    const populateUsers = populate({
+      rawResults: usersWhoLikeBook,
+      fieldToPopulate: 'user',
+      sourceData: users,
+      sourceField: '_id'
+    })
+    res.json(populateUsers)
   }
 
   app.post('/users/:uid/likes/:bid', userLikesBook)
-  app.delete('users/:uid/unlikes/:bid', userUnlikeBook)
+  app.delete('/users/:uid/likes/:bid', userUnlikesBook)
   app.get('/likes', findAllLikes)
   app.get('/users/:uid/likes', findBooksLikedByUser)
-  app.get('books/:bid/likes', findUsersWhoLikeBook)
+  app.get('/books/:bid/likes', findUsersWhoLikedBook)
 }
 
 export default LikesController;

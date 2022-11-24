@@ -9,6 +9,8 @@ let books = [
     },
 ]
 
+export const getBooks = () => books;
+
 const BooksController = (app) => {
     const createBook = (req, res) => {
         const book = req.body
