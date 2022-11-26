@@ -31,14 +31,22 @@ const LikesController = (app) => {
       user: uid,
       book: bid
     }
-    likes.push(newLike)
-    res.json(newLike)
+    if(likes.filter(like => like.user === uid && like.book === bid).length > 0) {
+       res.status(400).json({msg:'Book already liked'})
+    } else {
+      likes.push(newLike)
+      res.json(newLike)
+    }
   }
   const userUnlikesBook = (req, res) => {
     const uid = req.params.uid
     const bid = req.params.bid
-    likes = likes.filter((l) => l.user !== uid && l.book !== bid)
-    res.send(200)
+    if(likes.filter(like => like.user === uid && like.book === bid).length === 0) {
+      res.status(400).json({msg: 'Book has not been liked yet'})
+    } else {
+      likes = likes.filter((l) => l.user === uid && l.book !== bid)
+      res.send(200)
+    }
   }
   const findAllLikes = (req, res) => {
     const populatedBooks = populate({
