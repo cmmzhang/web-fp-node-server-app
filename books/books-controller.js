@@ -16,7 +16,7 @@ const BooksController = (app) => {
         const book = req.body
         book["_id"] = (new Date()).getTime() + ''
         book["likeCount"] = 0
-/*        book["liked"] = false*/
+        book["liked"] = false
         books.push(book)
         res.send(book)
     }
