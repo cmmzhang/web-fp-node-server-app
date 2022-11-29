@@ -1,4 +1,6 @@
-let books = [
+import * as booksDao from "./books-dao.js";
+
+export let books = [
     {
         _id: '123',
         title: 'b1'
@@ -12,34 +14,38 @@ let books = [
 export const getBooks = () => books;
 
 const BooksController = (app) => {
-    const createBook = (req, res) => {
+    const createBook = async (req, res) => {
         const book = req.body
-        book["_id"] = (new Date()).getTime() + ''
-  /*      book["likes"] = 0
-        book["liked"] = false*/
-        books.push(book)
-        res.send(book)
+        // book["_id"] = (new Date()).getTime() + ''
+        // book["likeCount"] = 0
+        // book["liked"] = false
+        // books.push(book)
+        const actualBook = await booksDao.createBook(book)
+        res.send(actualBook)
     }
 
-    const findAllBooks = (req, res) => {
-        res.send(books)
+    const findAllBooks = async (req, res) => {
+        const allBooks = await booksDao.findAllBooks()
+        res.send(allBooks)
     }
 
-    const updateBook = (req, res) => {
+    const updateBook = async (req, res) => {
         const bid = req.params['bid']
         const bookUpdates = req.body
-        const bookIndex = books.findIndex((b) => b._id === bid)
-        books[bookIndex] = {
-            ...books[bookIndex],
-            ...bookUpdates
-        }
-        res.sendStatus(200)
+        const status = await booksDao.updateBook(bid, bookUpdates)
+        // const bookIndex = books.findIndex((b) => b._id === bid)
+        // books[bookIndex] = {
+        //     ...books[bookIndex],
+        //     ...bookUpdates
+        // }
+        res.send(status)
     }
 
-    const deleteBook = (req, res) => {
+    const deleteBook = async (req, res) => {
         const bid = req.params['bid']
-        books = books.filter((b) => b._id !== bid)
-        res.sendStatus(200)
+        const status = booksDao.deleteBook(bid)
+        // books = books.filter((b) => b._id !== bid)
+        res.send(status)
     }
 
     app.post('/books', createBook)
