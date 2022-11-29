@@ -1,31 +1,15 @@
 import {getBooks} from "../books/books-controller.js";
 import users from "../users/users.js";
-import * as dao from './reviews-dao.js'
-let reviews = [
-    {_id: '123', user: '111', book:'321',book_title: 'Becoming'},
-    {_id: '345', user: '111', book:'432',book_title: 'THE LOST METAL'},
-    {_id: '456', user: '222', book:'543',book_title: 'FAIRY TALE'},
-]
+import * as reviewDao from './reviews-dao.js'
 
 const ReviewsController = (app) => {
-    // const populate = (
-    //     {
-    //         rawResults, fieldToPopulate,
-    //         sourceData, sourceField
-    //     }) => {
-    //     const populatedResults = rawResults.map((raw) => {
-    //         const source = sourceData.find(source => source[sourceField] === raw[fieldToPopulate])
-    //         return ({
-    //             ...raw,
-    //             [fieldToPopulate]: source
-    //         })
-    //     })
-    //     return populatedResults
-    // }
+
     const userReviewsBook = async (req, res) => {
+        console.log("req in controller", req)
         const newReview = req.body
-        const actualReview = await dao.createReview(newReview)
-        res.json(actualReview)
+        console.log("newReview in controller", newReview)
+        const actualReview = await reviewDao.createReview(newReview)
+        res.send(actualReview)
     }
     //
     // const findAllReviews = (req, res) => {
@@ -45,14 +29,14 @@ const ReviewsController = (app) => {
     // }
 
     const findAllReviews = async (req, res) => {
-        const reviews = await dao.findAllReviews()
-        res.json(reviews)
+        const allReviews = await reviewDao.findAllReviews()
+        res.send(allReviews)
     }
 
 
     const userdeleteReview = async (req, res) => {
         const rid = req.params._id
-        const status = await dao.deleteReview(rid)
+        const status = await reviewDao.deleteReview(rid)
         res.json(status)
     }
     // const findBooksReviewedByUser = (req, res) => {

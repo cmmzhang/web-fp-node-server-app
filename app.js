@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import BooksController from "./books/books-controller.js";
 import LikesController from "./likes/likes-controller.js";
-
+import ReviewsController from "./reviews/reviews-controller.js";
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,4 +21,5 @@ app.use(cors());
 app.use(express.json());
 BooksController(app);
 LikesController(app);
+ReviewsController(app);
 app.listen(4000)

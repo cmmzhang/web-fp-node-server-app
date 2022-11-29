@@ -1,11 +1,19 @@
 import reviewsModel from "./reviews-model.js";
 
-export const createReview = (review) =>
-    reviewsModel.create(review)
+export const createReview = async(review) =>{
+    console.log("review in reviews-dao",review)
+    const actualReview = await reviewsModel.create(review)
+    return actualReview
+
+  }
+
+    
 
 
-export const findAllReviews = () =>
-    reviewsModel.find()
+export const findAllReviews = async() =>{
+    const allReview = await reviewsModel.find()
+    return allReview
+}
 
 export const findReviewById = (uid) =>
     reviewsModel.findById(uid)
@@ -14,9 +22,13 @@ export const findByUsername = (username) =>
     reviewsModel.findOne({username})
 
 
-export const deleteReview = (uid) =>
-    reviewsModel.deleteOne({_id: uid})
+export const deleteReview = async (uid) =>{
+    const status = await reviewsModel.deleteOne({_id: uid})
+}
 
-export const updateReview = (rid, reviewUpdates) =>
-    reviewsModel.updateOne({_id: rid},
+
+export const updateReview = (rid, reviewUpdates) =>{
+    const status = reviewsModel.updateOne({_id: rid},
         {$set: reviewUpdates})
+    return status
+}
