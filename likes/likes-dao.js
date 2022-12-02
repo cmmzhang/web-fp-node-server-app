@@ -6,16 +6,18 @@ export const userLikesBook = async (uid, bid) => {
 export const userUnlikesBook = async(uid, bid) => {
   return await likesModel.deleteOne({user: uid, book: bid})
 }
-export const findBooksLikedByUser = async(uid) => {
+export const findBooksLikedByUser = async (uid) => {
   return await likesModel
   .find({user: uid}, {user: false})
   .populate('book', 'title')
   .exec()
 }
-export const findUsersThatLikeBook = async(bid) => {
-  return await likesModel.find({book: bid}, {book: false})
+
+export const findUsersThatLikeBook = async (bid) => {
+   return await likesModel.find({book: bid}, {book: false})
   .populate('user', 'username')
   .exec()
 }
+
 export const findAllLikes = async () =>
     await likesModel.find()
