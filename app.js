@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import express from 'express';
+import session from 'express-session'
 import cors from 'cors';
 import BooksController from "./books/books-controller.js";
 import LikesController from "./likes/likes-controller.js";
@@ -18,10 +19,23 @@ const options = {
 mongoose.connect('mongodb://localhost:27017/web5610', options);
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors(
+{
+  credentials: true,
+  origin: 'http://localhost:3000'
+}
+));
+app.use(session({
+  secret: 'should be an environment variable',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+app.use(express.json({}));
+
 BooksController(app);
 LikesController(app);
 UsersController(app);
 ReviewsController(app);
+// SessionController(app)
 app.listen(4000)
