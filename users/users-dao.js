@@ -7,7 +7,7 @@ export const findAllUsers = () =>
     usersModel.find()
 
 export const findUserById = (uid) =>
-    usersModel.findById(uid)
+    usersModel.findById(uid, {password: false})
 
 export const findByUsername = (username) =>
     usersModel.findOne({ username })
@@ -22,6 +22,7 @@ export const deleteUser = (uid) =>
     usersModel.deleteOne({ _id: uid })
 
 export const updateUser = (uid, userUpdates) => {
-    usersModel.updateOne({ _id: uid }),
-        { $set: userUpdates }
+  usersModel.updateOne({ _id: uid }),
+      { $set: userUpdates }
 }
+

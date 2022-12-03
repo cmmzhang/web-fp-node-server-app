@@ -65,8 +65,19 @@ const UsersController = (app) => {
         res.sendStatus(200)
     }
 
+    const findUserById = async (req, res) => {
+        const uid = req.params.uid
+        const user = await dao.findUserById(uid)
+        if (user) {
+            res.json(user)
+            return
+        }
+        res.sendStatus(404)
+    }
+
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
+    app.get('/users/:uid', findUserById)
     app.delete('/users/:uid', deleteUser)
     app.put('/users/:uid', updateUser)
     app.post('/register', register)

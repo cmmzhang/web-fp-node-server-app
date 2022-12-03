@@ -9,8 +9,6 @@ export const userUnlikesBook = async(uid, bid) => {
 export const findBooksLikedByUser = async (uid) => {
   return await likesModel
   .find({user: uid}, {user: false})
-  .populate('book', 'title')
-  .exec()
 }
 
 export const findUsersThatLikeBook = async (bid) => {
