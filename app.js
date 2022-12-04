@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 import express from 'express';
 import session from 'express-session'
 import cors from 'cors';
+import session from 'express-session';
 import BooksController from "./books/books-controller.js";
 import LikesController from "./likes/likes-controller.js";
 import UsersController from "./users/users-controller.js";
 import ReviewsController from "./reviews/reviews-controller.js";
+import FollowsController from "./follows/follows-controller";
+import SessionController from "./session-controller";
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -24,7 +28,8 @@ app.use(cors(
   credentials: true,
   origin: 'http://localhost:3000'
 }
-));
+))
+
 app.use(session({
   secret: 'should be an environment variable',
   resave: false,
@@ -33,9 +38,11 @@ app.use(session({
 }))
 app.use(express.json({}));
 
+
 BooksController(app);
 LikesController(app);
 UsersController(app);
+SessionController(app);
 ReviewsController(app);
-// SessionController(app)
+FollowsController(app);
 app.listen(4000)
