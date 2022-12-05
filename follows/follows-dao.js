@@ -5,14 +5,14 @@ export const followUser = (follow) =>
 
 
 export const findFollowers = (followed) => {
-    followsModel.find({followed})
-        .populate('follower')
-        .exec()
+  followsModel.find({followed})
+  .populate('follower')
+  .exec()
 }
 
 
 export const findFollowing = (follower) => {
-    followsModel.find({follower })
-        .populate('followed')
-        .exec()
+  followsModel.find({follower })
+  .populate('followed')
+  .exec()
 }

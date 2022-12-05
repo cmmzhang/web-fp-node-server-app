@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 import express from 'express';
 import session from 'express-session'
 import cors from 'cors';
-import session from 'express-session';
+import session from 'express-session'
 import BooksController from "./books/books-controller.js";
 import LikesController from "./likes/likes-controller.js";
 import UsersController from "./users/users-controller.js";
-import ReviewsController from "./reviews/reviews-controller.js";
-import FollowsController from "./follows/follows-controller";
-import SessionController from "./session-controller";
+import FollowsController from "./follows/follows-controller.js";
+import SessionController from "./session-controller.js";
+
 
 const options = {
   useNewUrlParser: true,
@@ -20,14 +20,14 @@ const options = {
   family: 4
 }
 
-mongoose.connect('mongodb://localhost:27017/web5610', options);
+mongoose.connect('mongodb://localhost:27017/bookworms', options);
 
 const app = express();
 app.use(cors(
-{
-  credentials: true,
-  origin: 'http://localhost:3000'
-}
+    {
+      credentials: true,
+      origin: 'http://localhost:3000'
+    }
 ))
 
 app.use(session({
@@ -38,11 +38,9 @@ app.use(session({
 }))
 app.use(express.json({}));
 
-
 BooksController(app);
 LikesController(app);
 UsersController(app);
 SessionController(app);
-ReviewsController(app);
 FollowsController(app);
 app.listen(4000)
