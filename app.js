@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import express from 'express';
-import session from 'express-session'
 import cors from 'cors';
 import session from 'express-session'
 import BooksController from "./books/books-controller.js";
@@ -8,7 +7,6 @@ import LikesController from "./likes/likes-controller.js";
 import UsersController from "./users/users-controller.js";
 import FollowsController from "./follows/follows-controller.js";
 import SessionController from "./session-controller.js";
-
 
 const options = {
   useNewUrlParser: true,
