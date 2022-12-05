@@ -7,7 +7,7 @@ export const findAllUsers = () =>
     usersModel.find()
 
 export const findUserById = (uid) =>
-    usersModel.findById(uid)
+    usersModel.findById(uid, {password: false})
 
 export const findByUsername = (username) =>
     usersModel.findOne({ username })
