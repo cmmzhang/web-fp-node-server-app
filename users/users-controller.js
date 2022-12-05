@@ -31,39 +31,49 @@ const UsersController = (app) => {
 
     const login = async (req, res) => {
         const credentials = req.body
-        const existingUser = await findByUsername(credentials.username)
-        if (!existingUser) {
-            res.sendStatus(403)
-            return
-        }
-        currentUser = existingUser
-        res.json(existingUser)
-    }
-
-    const register = async (req, res) => {
-        const user = req.body
-        const existingUser = await findByUsername(user.username)
+        const existingUser = await dao.findUserByCredentials(credentials.username, credentials.password)
         if (existingUser) {
-            req.session['currentUser'] = existingUser
-            res.sendStatus(403)
-            return
-        }
-        const actualUser = await dao.createUser(user)
-        currentUser = actualUser
-        res.json(actualUser)
-    }
-
-    const profile = async (req, res) => {
-        if (currentUser) {
-            res.json(currentUser)
+            res.session['currentUser'] = existingUser
+            res.json(existingUser)
             return
         }
         res.sendStatus(403)
     }
 
+    const register = async (req, res) => {
+        const user = req.body;
+        const existingUser = await dao
+            .findUserByUsername(user.username)
+        if(existingUser) {
+            res.sendStatus(403)
+            return
+        }
+        const currentUser = await dao.createUser(user)
+        req.session['currentUser'] = currentUser
+        res.json(currentUser)
+    }
+
+    const profile = async (req, res) => {
+        if (req.session['currentUser']) {
+            res.send(req.session['currentUser'])
+        } else {
+            res.sendStatus(403)
+        }
+    }
+
     const logout = async (req, res) => {
-        currentUser = null
+        req.session.destroy()
         res.sendStatus(200)
+    }
+
+    const findUserById = async (req, res) => {
+        const uid = req.params.uid
+        const user = await userDao.findUserById(uid)
+        if (user) {
+            res.json(user)
+            return
+        }
+        res.sendStatus(404)
     }
 
     app.post('/users', createUser)
