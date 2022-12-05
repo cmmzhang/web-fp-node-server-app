@@ -1,6 +1,7 @@
 import * as dao from './users-dao.js'
 import { findByUsername } from './users-dao.js'
 
+
 let currentUser = null
 const UsersController = (app) => {
 
@@ -51,7 +52,6 @@ const UsersController = (app) => {
         req.session['currentUser'] = currentUser
         res.json(currentUser)
     }
-
 
     const profile = async (req, res) => {
         if (req.session['currentUser']) {
