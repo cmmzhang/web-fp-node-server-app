@@ -8,6 +8,7 @@ const FollowsController = (app) => {
     const actualFollow = await dao.followUser(follow)
     res.json(actualFollow);
   }
+
   const findFollowers = async (req, res) => {
     const followed = req.params.followed
     const followers = await dao.findFollowers(followed)
@@ -19,7 +20,14 @@ const FollowsController = (app) => {
     const followed = await dao.findFollowing(follower)
     res.json(followed)
   }
+
+  const findAllFollows = async (req, res) => {
+    const follows = await dao.findAllFollows()
+    res.json(follows)
+  }
+
   app.post('/follows', followUser)
+  app.get('/follows', findAllFollows)
   app.get('/users/:followed/followers', findFollowers)
   app.get('/users/:follower/following', findFollowing)
 }

@@ -1,7 +1,7 @@
 import followsModel from "./follows-model.js";
 
 export const followUser = (follow) =>
-    followsModel.create(follow)
+  followsModel.create(follow)
 
 
 export const findFollowers = (followed) => {
@@ -16,3 +16,6 @@ export const findFollowing = (follower) => {
   .populate('followed')
   .exec()
 }
+
+export const findAllFollows = async () =>
+    await followsModel.find()
