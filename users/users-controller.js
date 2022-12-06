@@ -30,8 +30,11 @@ const UsersController = (app) => {
 
     const login = async (req, res) => {
         const credentials = req.body
+        // console.log(credentials.username)
+        // console.log(credentials.password)
         const existingUser = await dao.findByCredentials(
             credentials.username, credentials.password)
+
         if(existingUser) {
             req.session['currentUser'] = existingUser
             res.json(existingUser)
