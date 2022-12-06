@@ -7,6 +7,7 @@ import LikesController from "./likes/likes-controller.js";
 import UsersController from "./users/users-controller.js";
 import FollowsController from "./follows/follows-controller.js";
 import SessionController from "./session-controller.js";
+import ReviewsController from "./reviews/reviews-controller.js";
 
 const options = {
   useNewUrlParser: true,
@@ -41,4 +42,5 @@ LikesController(app);
 UsersController(app);
 SessionController(app);
 FollowsController(app);
+ReviewsController(app);
 app.listen(4000)
