@@ -12,8 +12,18 @@ export const findBooksLikedByUser = async(uid) => {
 }
 export const findUsersThatLikeBook = async(bid) => {
   return await likesModel.find({book: bid}, {book: false})
-  .populate('user', 'username')
+  .populate('user', 'username') 
   .exec()
 }
 export const findAllLikes = async () =>
     await likesModel.find()
+
+
+// export const findBooksLikedByUser = async(uid) => {
+//   return await likesModel.find({uid})
+// }
+// export const findUsersThatLikeBook = async(bid) => {
+//   return await likesModel.find({bid}).populate('user', 'username').exec()
+// }
+// export const findAllLikes = async () =>{
+//   return await likesModel.find().populate('user','username').exec()}

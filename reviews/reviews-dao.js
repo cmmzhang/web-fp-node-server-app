@@ -21,3 +21,7 @@ export const findReviewsByBook = async(booksapiID) =>{
 
 export const findReviewsByAuthor = (author) =>
     reviewsModel.find({author}) 
+
+export const deleteReview = async(review_id, booksapiID)=>{
+  return await reviewsModel.deleteOne({_id: review_id, booksapiID:booksapiID})
+}

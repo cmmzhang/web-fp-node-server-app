@@ -44,7 +44,6 @@ const BooksController = (app) => {
     const deleteBook = async (req, res) => {
         const bid = req.params['bid']
         const status = booksDao.deleteBook(bid)
-        // books = books.filter((b) => b._id !== bid)
         res.send(status)
     }
 

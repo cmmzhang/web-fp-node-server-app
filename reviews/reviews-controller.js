@@ -30,11 +30,18 @@ const ReviewsController = (app) => {
         const reviews = await reviewDao.findAllReviews()
         res.json(reviews)}
 
+    const deleteReview = async(req, res) =>{
+        const review_id = req.params._id
+        const booksapiID = req.params.booksapiID
+        const status = await reviewDao.deleteReview(review_id, booksapiID)
+        res.send(status)
+    }
+
     app.post('/reviews', createReview)
     app.get('/books/:booksapiID/reviews', findReviewsByBook)
     app.get('/users/:author/reviews', findReviewsByAuthor)
     app.get('/allreviews', findAllReviews)
-
+    app.delete('/review/:_id/books/:booksapiIDs', deleteReview)
 
 
 }
