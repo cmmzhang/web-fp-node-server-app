@@ -5,8 +5,11 @@ const usersSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    dob: Date,
+    emailVisible: {type: String, enum: ['Visible in the public profile', 'Not Visible in the public profile']},
     phone: String,
+    phoneVisible: {type: String, enum: ['Visible in the public profile', 'Not Visible in the public profile']},
+    dob: Date,
+    dobVisible: {type: String, enum: ['Visible in the public profile', 'Not Visible in the public profile']},
     type: { type: String, enum: ['PROFESSIONAL', 'STUDENT', 'ADMIN'] }
 }, { collection: 'users' });
 export default usersSchema;

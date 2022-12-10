@@ -34,7 +34,6 @@ const UsersController = (app) => {
         // console.log(credentials.password)
         const existingUser = await dao.findByCredentials(
             credentials.username, credentials.password)
-
         if(existingUser) {
             req.session['currentUser'] = existingUser
             res.json(existingUser)
@@ -55,8 +54,8 @@ const UsersController = (app) => {
         res.json(currentUser)
     }
 
-
     const profile = async (req, res) => {
+        console.log(req.session['currentUser'])
         if (req.session['currentUser']) {
             res.send(req.session['currentUser'])
         } else {
