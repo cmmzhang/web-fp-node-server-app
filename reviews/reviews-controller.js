@@ -15,9 +15,7 @@ const ReviewsController = (app) => {
     }
     const findReviewsByBook = async (req, res) => {
         const booksapiID = req.params.booksapiID
-        console.log("review-controller booksapiID",booksapiID)
         const reviews = await reviewDao.findReviewsByBook(booksapiID)
-        console.log("review-controller reviews",reviews)
         res.json(reviews)
     }
     const findReviewsByAuthor = async (req, res) => {
