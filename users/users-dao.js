@@ -13,8 +13,6 @@ export const findByUsername = async (username) =>
     await usersModel.findOne({ username })
 
 export const findByCredentials = async (username, password) => {
-    console.log(username)
-    console.log(password)
     const user = await usersModel.findOne({ username, password })
     return user
 }
@@ -23,8 +21,6 @@ export const deleteUser = async (uid) =>
     await usersModel.deleteOne({ _id: uid })
 
 export const updateUser = async (uid, userUpdates) => {
-    console.log(uid)
-    console.log(userUpdates)
   await usersModel.updateOne({ _id: uid },
       { $set: userUpdates })
 }

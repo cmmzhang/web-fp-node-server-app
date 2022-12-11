@@ -86,6 +86,8 @@ const LikesController = (app) => {
   const findUsersWhoLikedBook = async (req, res) => {
     const bid = req.params.bid
     const users = await likesDao.findUsersThatLikeBook(bid)
+    console.log("find users who liked book")
+    console.log(users)
     res.json(users)
 /*    const usersWhoLikeBook = likes.filter((like) => like.book === bid)
     const populateUsers = populate({
