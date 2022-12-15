@@ -21,7 +21,11 @@ export const deleteUser = async (uid) =>
     await usersModel.deleteOne({ _id: uid })
 
 export const updateUser = async (uid, userUpdates) => {
-  await usersModel.updateOne({ _id: uid },
+    console.log(userUpdates)
+    console.log(1)
+  const user = await usersModel.updateOne({ _id: uid },
       { $set: userUpdates })
+   return user
+
 }
 
