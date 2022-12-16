@@ -20,11 +20,9 @@ const UsersController = (app) => {
     }
 
     const updateUser = async (req, res) => {
-        console.log("user-controller")
         const uid = req.params.uid
         const updates = req.body
         const user = await dao.updateUser(uid, updates)
-        console.log(user);
         res.json(user)
     }
 
